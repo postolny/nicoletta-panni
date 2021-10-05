@@ -1,0 +1,305 @@
+@import url(../css/capture_it/font.css);
+
+
+html,
+body {
+  cursor: url(../img/glow_normal_white.cur), auto;
+}
+
+body {
+  margin: 0;
+  background: url(../img/sfondo_inverno.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
+
+::selection {
+  color: #fff;
+  background: #8dc692;
+  text-shadow: none;
+}
+
+#capodanno {
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+#capodanno h2 {
+  font-family: "Capture it";
+  letter-spacing: 5px;
+  text-shadow: -1px -1px #FFF, -2px -2px #FFF, -1px 1px #FFF, -2px 2px #FFF, 1px 1px #FFF, 2px 2px #FFF, 1px -1px #FFF, 2px -2px #FFF, -3px -3px 2px #BBB, -3px 3px 2px #BBB, 3px 3px 2px #BBB, 3px -3px 2px #BBB;
+  opacity: 0.5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 1.3;
+  color: #d5d5d5 !important;
+  padding: 0 20px;
+}
+
+#inverno {
+  width: 300px;
+  height: 155px;
+  background: url(../img/inverno.png);
+  position: fixed;
+  bottom: 0;
+  left: 0px;
+  z-index: 1;
+  cursor: pointer;
+  text-indent: -999px;
+}
+
+#pupazzo_di_neve {
+  width: 96px;
+  height: 96px;
+  background: url(../img/pupazzo_di_neve.png);
+  position: fixed;
+  bottom: -96px;
+  left: 0px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+#musica {
+  display: none;
+}
+
+#inverno img {
+  display: block;
+}
+
+#controls {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 1.0em;
+  left: 0.3em;
+  z-index: 1;
+}
+
+#playpause {
+  width: 32px;
+  height: 32px;
+  display: block;
+  cursor: pointer;
+}
+
+.stop {
+  background: url(../img/player.png) no-repeat right 0px;
+}
+
+.start {
+  background: url(../img/player.png);
+  background-position: right -32px;
+  display: block;
+  cursor: pointer;
+}
+
+.modal {
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: left;
+  background: rgba(0, 0, 0, .9);
+  transition: opacity .25s ease;
+  z-index: 10011;
+}
+
+.modal_bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.modal_inner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  margin: auto;
+  overflow: auto;
+  background: #fff;
+  border-radius: 5px;
+  padding: 1em 2em;
+  height: 50%;
+  line-height: 22px;
+  font-family: Helvetica, Verdana, Arial, sans-serif;
+  color: #3a3a3a;
+}
+
+.modal_inner h4 {
+  font-size: 1.25em;
+  padding: 0.5em 0;
+}
+
+.modal_close {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  width: 1.1em;
+  height: 1.1em;
+  cursor: pointer;
+}
+
+.modal_close:after,
+.modal_close:before {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 1.5em;
+  background: #ccc;
+  display: block;
+  transform: rotate(45deg);
+  left: 50%;
+  margin: -3px 0 0 -1px;
+  top: 0;
+}
+
+.modal_close:hover:after,
+.modal_close:hover:before {
+  background: #aaa;
+}
+
+.modal_close:before {
+  transform: rotate(-45deg);
+}
+
+.modal p img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  float: left;
+  margin: 0 1em 1em 0;
+}
+
+.link {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
+  background-size: 100% 200%;
+  background-repeat: no-repeat;
+  background-image: -webkit-linear-gradient(bottom, #8dc692 50%, rgba(0, 0, 0, 0) 50.1%);
+  background-image: -moz-linear-gradient(bottom, #8dc692 50%, rgba(0, 0, 0, 0) 50.1%);
+  background-image: linear-gradient(to top, #8dc692 50%, rgba(0, 0, 0, 0) 50.1%);
+  background-position: left 0 top 7.5%;
+  -webkit-transition: background 160ms ease;
+  -moz-transition: background 160ms ease;
+  transition: background 160ms ease;
+}
+
+.link:focus,
+.link:hover,
+.link:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+.link:focus {
+  outline: none;
+}
+
+.link:hover {
+  background-size: 100% 200%;
+  background-position: left 0 top 42.5%;
+}
+
+.link:active {
+  background-size: 100% 200%;
+  background-position: left 0 top 60%;
+}
+
+@media screen and (max-width:768px) {
+  .modal_inner {
+    width: 90%;
+    height: 90%;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width:575.98px) and (orientation:portrait) {
+  body {
+    background-position: right 35% center;
+  }
+}
+
+@media (min-width:576px) and (max-width:767.98px) and (orientation:portrait) {
+  body {
+    background-position: right 40% center;
+  }
+}
+
+@media (min-width:768px) and (max-width:991.98px) and (orientation:portrait) {
+  body {
+    background-position: right 41% center;
+  }
+}
+
+@media (max-width:921px) {
+  .modal p img {
+    float: none;
+    margin: 0;
+    max-width: 100%;
+  }
+
+  .modal_inner h4 {
+    padding: 0.2em 0;
+  }
+}
+
+@media (max-width:575.98px) {
+  #capodanno h2 {
+    font-size: 30px;
+  }
+}
+
+@media (min-width:1920px) {
+  #capodanno h2 {
+    font-size: 70px;
+  }
+}
+
+.btn-github {
+  display: block;
+  position: absolute;
+  top: -32px;
+  right: 20px;
+  background: url(../img/github-icon.png) no-repeat;
+  width: 32px;
+  height: 32px;
+  z-index: 1;
+  -webkit-animation: slide-bottom 1s ease-in 0.5s both;
+  animation: slide-bottom 1s ease-in 0.5s both;
+}
+
+@-webkit-keyframes slide-bottom {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(52px);
+  }
+}
+
+@keyframes slide-bottom {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(52px);
+  }
+}
