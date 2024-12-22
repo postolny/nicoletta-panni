@@ -284,6 +284,26 @@ body {
   animation: slide-bottom 1s ease-in 0.5s both;
 }
 
+@-webkit-keyframes slide-bottom {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(52px);
+  }
+}
+
+@keyframes slide-bottom {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(52px);
+  }
+}
+
 @keyframes easeOutBounceWithScale {
   0% {
     bottom: -100px;
