@@ -229,7 +229,7 @@ THREE.Vector3.prototype.rotateZ = function(angle){
 
 	this.y= (tempy*cosRY)+(tempx*sinRY);
 	this.x= (tempy*-sinRY)+(tempx*cosRY);
-
+    
 
 }
 
@@ -264,125 +264,131 @@ particleImage.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAA
 
 function init() {
 
-	container = document.createElement('div');
-	document.body.appendChild(container);
+  container = document.createElement('div');
+  document.body.appendChild(container);
 
-	camera = new THREE.PerspectiveCamera( 75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000 );
-	camera.position.z = 1000;
+  camera = new THREE.PerspectiveCamera(75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000);
+  camera.position.z = 1000;
 
-	scene = new THREE.Scene();
-	scene.add(camera);
-		
-	renderer = new THREE.CanvasRenderer();
-	renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-	var material = new THREE.ParticleBasicMaterial( { map: new THREE.Texture(particleImage) } );
-		
-	for (var i = 0; i < 150; i++) {
+  scene = new THREE.Scene();
+  scene.add(camera);
 
-		particle = new Particle3D( material);
-		particle.position.x = Math.random() * 2000 - 1000;
-		particle.position.y = Math.random() * 2000 - 1000;
-		particle.position.z = Math.random() * 2000 - 1000;
-		particle.scale.x = particle.scale.y =  1;
-		scene.add( particle );
-		
-		particles.push(particle); 
-	}
+  renderer = new THREE.CanvasRenderer();
+  renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	container.appendChild( renderer.domElement );
-	container.addEventListener('touchstart', function(e){e.preventDefault()});
-	container.addEventListener('touchmove', function(e){e.preventDefault()});
-	container.addEventListener('touchend', function(e){e.preventDefault()});
-	container.className			= "snow-panel";
-	container.style.position	= "fixed";
-	container.style.width		= "100%";
-	container.style.height		= "100%";
-	container.style.zIndex		= "10010";
-	container.style.left		= "0";
-	container.style.top			= "0";
-	container.style.pointerEvents = "none";
-	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-	
-	setInterval( loop, 2000 / 60 );
-	
+  var material = new THREE.ParticleBasicMaterial({ map: new THREE.Texture(particleImage) });
+
+  for (var i = 0; i < 150; i++) {
+    particle = new Particle3D(material);
+    particle.position.x = Math.random() * 2000 - 1000;
+    particle.position.y = Math.random() * 2000 - 1000;
+    particle.position.z = Math.random() * 2000 - 1000;
+    particle.scale.x = particle.scale.y = 1;
+    scene.add(particle);
+
+    particles.push(particle);
+  }
+
+  container.appendChild(renderer.domElement);
+  container.addEventListener('touchstart', function(e) { e.preventDefault(); });
+  container.addEventListener('touchmove', function(e) { e.preventDefault(); });
+  container.addEventListener('touchend', function(e) { e.preventDefault(); });
+
+  container.className = "snow-panel";
+
+  document.addEventListener('mousemove', onDocumentMouseMove, false);
+  window.addEventListener('resize', onWindowResize, false);
+
+  // setInterval( loop, 2000 / 60 );
+
+  function animate() {
+    requestAnimationFrame(animate);
+    loop();
+  }
+  animate();
 }
 
-function onDocumentMouseMove( event ) {
 
-	mouseX = event.clientX - windowHalfX;
-	mouseY = event.clientY - windowHalfY;
+function onDocumentMouseMove(event) {
+
+  mouseX = event.clientX - windowHalfX;
+  mouseY = event.clientY - windowHalfY;
 }
 
-function onDocumentTouchStart( event ) {
+function onDocumentTouchStart(event) {
 
-	if ( event.touches.length == 1 ) {
+  if (event.touches.length == 1) {
 
-		event.preventDefault();
+    event.preventDefault();
 
-		mouseX = event.touches[ 0 ].pageX - windowHalfX;
-		mouseY = event.touches[ 0 ].pageY - windowHalfY;
-	}
+    mouseX = event.touches[0].pageX - windowHalfX;
+    mouseY = event.touches[0].pageY - windowHalfY;
+  }
 }
 
-function onDocumentTouchMove( event ) {
+function onDocumentTouchMove(event) {
 
-	if ( event.touches.length == 1 ) {
+  if (event.touches.length == 1) {
 
-		event.preventDefault();
+    event.preventDefault();
 
-		mouseX = event.touches[ 0 ].pageX - windowHalfX;
-		mouseY = event.touches[ 0 ].pageY - windowHalfY;
-	}
+    mouseX = event.touches[0].pageX - windowHalfX;
+    mouseY = event.touches[0].pageY - windowHalfY;
+  }
 }
 
 function loop() {
 
-	for(var i = 0; i<particles.length; i++)
-	{
-		var particle = particles[i]; 
-		particle.updatePhysics(); 
+  for (var i = 0; i < particles.length; i++) {
+    var particle = particles[i];
+    particle.updatePhysics();
 
-		with(particle.position)
-		{
-			if(y<-1000) y+=2000; 
-			if(x>1000) x-=2000; 
-			else if(x<-1000) x+=2000; 
-			if(z>1000) z-=2000; 
-			else if(z<-1000) z+=2000; 
-		}				
-	}
+    with(particle.position) {
+      if (y < -1000) y += 2000;
+      if (x > 1000) x -= 2000;
+      else if (x < -1000) x += 2000;
+      if (z > 1000) z -= 2000;
+      else if (z < -1000) z += 2000;
+    }
+  }
 
-	camera.position.x += ( mouseX - camera.position.x ) * 0.05;
-	camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
-	camera.lookAt(scene.position); 
+  camera.position.x += (mouseX - camera.position.x) * 0.05;
+  camera.position.y += (-mouseY - camera.position.y) * 0.05;
+  camera.lookAt(scene.position);
 
-	renderer.render( scene, camera );
+  renderer.render(scene, camera);
 }
-function isEnabled(page, array){
-	if(!Array.isArray(array)){
-		return true;
-	}else{
-		for(var i=0; i<array.length; i++){
-			if(page.indexOf(array[i])>=0){
-				return true;
-			}
-		}
-	}
-	return false;
+
+function isEnabled(page, array) {
+  if (!Array.isArray(array)) {
+    return true;
+  } else {
+    for (var i = 0; i < array.length; i++) {
+      if (page.indexOf(array[i]) >= 0) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
-jQuery(document).ready( function() {
-	var $ = jQuery;
-	//Snow
-	init();
-	// Read dynamically window sizes
-	$(window).resize(function() {
-		if(this.resizeTO) clearTimeout(this.resizeTO);
-		this.resizeTO = setTimeout(function() {
-			$(this).trigger("resizeEnd");
-		}, 500);
-	});
-	$(window).on("resizeEnd", function() {
-		$(".snow-panel canvas").css("width",($(this).width()));
-		$(".snow-panel canvas").css("height",($(this).height()));
-	});
+
+function onWindowResize() {
+  SCREEN_WIDTH = window.innerWidth;
+  SCREEN_HEIGHT = window.innerHeight;
+
+  // Обновление размеров камеры
+  camera.aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
+  camera.updateProjectionMatrix();
+
+  // Обновление размеров рендера
+  renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+}
+
+jQuery(document).ready(function() {
+  var $ = jQuery;
+  // инициализация снега
+  init();
+
+  // Обновление размеров рендера при изменении размеров окна
+  $(window).on("resize", onResize);
 });
