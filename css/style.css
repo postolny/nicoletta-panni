@@ -1,6 +1,5 @@
 @import url(../css/capture_it/font.css);
 
-
 html,
 body {
   cursor: url(../img/glow_normal_white.cur), auto;
@@ -61,6 +60,7 @@ body {
   bottom: -96px;
   left: 0px;
   z-index: 2;
+  transition: none;
   cursor: pointer;
 }
 
@@ -284,22 +284,43 @@ body {
   animation: slide-bottom 1s ease-in 0.5s both;
 }
 
-@-webkit-keyframes slide-bottom {
+@keyframes easeOutBounceWithScale {
   0% {
-    transform: translateY(0);
+    bottom: -100px;
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    bottom: 20px;
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    bottom: -10px;
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    bottom: 0;
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    bottom: 0;
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    bottom: 0;
+    transform: scale3d(1.05, 0.95, 1);
   }
 
   100% {
-    transform: translateY(52px);
+    bottom: 0;
+    transform: scale3d(1, 1, 1);
   }
 }
 
-@keyframes slide-bottom {
-  0% {
-    transform: translateY(0);
-  }
-
-  100% {
-    transform: translateY(52px);
-  }
+#pupazzo_di_neve.animate {
+  animation: easeOutBounceWithScale 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
