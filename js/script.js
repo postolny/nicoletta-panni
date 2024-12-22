@@ -28,7 +28,15 @@ $(document).ready(function() {
   });
   $('#inverno').click(function() {
     $(this).animate({ bottom: "-155px" }, 700, function() {
-      $('#pupazzo_di_neve').animate({ bottom: "0" }, 500, "easeOutBounce");
+
+      const pupazzo = $('#pupazzo_di_neve');
+
+      pupazzo.addClass('animate');
+
+      setTimeout(() => {
+        pupazzo.removeClass('animate');
+        pupazzo.css('bottom', '0');
+      }, 500);
     });
   });
   $('#pupazzo_di_neve').click(function() {
