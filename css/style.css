@@ -344,3 +344,13 @@ body {
 #pupazzo_di_neve.animate {
   animation: easeOutBounceWithScale 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
+
+.snow-panel canvas {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 10010;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+}
