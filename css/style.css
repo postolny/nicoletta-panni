@@ -99,6 +99,11 @@ body {
   z-index: 10011;
 }
 
+.modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
 .modal_inner {
   max-width: 700px;
   max-height: 90vh;
