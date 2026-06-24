@@ -1,9 +1,29 @@
 $(document).ready(function() {
   const controls = {
     audio: $("#musica")[0],
-    playpause: $("#playpause")
+    playpause: $("#playpause"),
+    wakeLock: null
   };
-  controls.playpause.on("click", function() {
+  async function requestWakeLock() {
+    if (!controls.wakeLock) {
+      controls.wakeLock = await navigator.wakeLock.request('screen');
+    }
+  }
+
+  function releaseWakeLock() {
+    if (controls.wakeLock) {
+      controls.wakeLock.release();
+      controls.wakeLock = null;
+    }
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      requestWakeLock();
+    } else {
+      releaseWakeLock();
+    }
+  });
+  controls.playpause.on("click", () => {
     const isPaused = controls.audio.paused;
     if (isPaused) {
       controls.audio.play();
@@ -11,7 +31,16 @@ $(document).ready(function() {
       controls.audio.pause();
       controls.audio.currentTime = 0;
     }
-    $(this).find(".icon-play").toggle(!isPaused).end().find(".icon-pause").toggle(isPaused);
+  });
+  $(controls.audio).on("play", () => {
+    requestWakeLock();
+    controls.playpause.find(".icon-play").hide();
+    controls.playpause.find(".icon-pause").show();
+  });
+  $(controls.audio).on("pause", () => {
+    releaseWakeLock();
+    controls.playpause.find(".icon-play").show();
+    controls.playpause.find(".icon-pause").hide();
   });
   const modal = $('.modal');
   const modalClose = $('.modal_close');
@@ -19,18 +48,24 @@ $(document).ready(function() {
   function closeModal() {
     modal.removeClass('active');
   }
-  $(controls.audio).on("ended", function() {
+  $(controls.audio).on("ended", () => {
+    releaseWakeLock();
     controls.playpause.find(".icon-play").show();
     controls.playpause.find(".icon-pause").hide();
     modal.addClass('active');
   });
   modalClose.on('click', closeModal);
-  modal.on('click', function(e) {
-    if (e.target === this) {
+  // modal.on('click', function(e) {
+  //   if (e.target === this) {
+  //     closeModal();
+  //   }
+  // });
+  modal.on('click', (e) => {
+    if (e.target === e.currentTarget) {
       closeModal();
     }
   });
-  $(document).on('keyup', function(e) {
+  $(document).on('keyup', (e) => {
     if (e.key === 'Escape') {
       closeModal();
     }
@@ -48,7 +83,7 @@ $(document).ready(function() {
     $(this).animate({ bottom: '-96px' }, 700);
     inverno.animate({ bottom: '0' }, 700);
   });
-  var year = function() {
+  var year = () => {
     return new Date().getFullYear();
   };
   $('.year').text(year());
